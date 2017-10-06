@@ -295,3 +295,199 @@ en løsning for dette men vi vil ikke ta opp bruken av denne her.
 |SVV	|Tillate at brukere som har fått tildelt rolle i Altinn kan operere på vegne av en bedrift.  Dette gjøres ved å benytte IKT-løsningen Altinn-Oppslag
 |SVV	|
 |=========
+
+= Omfang
+
+[cols="10a,5,^5,5",options="header",grid="cols"]
+|=========
+|	|Baseline | Første leveransen	| Målarkitektur/-bilde
+|Forretningsarkitektur | | |
+|* Brukstilfeller/brukerhistorier | | X |
+|* Prosessmodellering (IKT-støtte)| |   |
+|Informasjonsarkitektur | | |
+|* Begreper | | |
+|* Domenemodell |||
+|Applikasjonsarkitektur | | |
+|* Komponentdiagram | |X|
+|* Grensesnittsoversikt | |X|
+|* Sekvensdiagram | |X|
+|Teknologiarkitektur |||
+|* Installasjonsdiagram (dette er et eksplisitt krav) ||X|
+|=========
+
+= Gjenbrukbare løsninger og tjenester
+
+[cols="3,3a,9,3",options="header",grid="cols"]
+|===========================
+|Potensiell gjenbrukbar løsning eller SOA-tjeneste
+|CMDB-id/URL el. annen identifikator
+|Vurdering rundt gjenbruk i denne leveransen
+|Hvem har deltatt i vurderingen?
+
+|STS
+|_Ikke definert ennå_
+|Denne løsningen er i ferd med å utvikles og vil bli benyttet for å validere innkommende token og hente
+ut fødselsnummer fra IDP
+|Løsningsarkitekt
+
+|Selvbetjening - Kjøretøy
+|SB Kjøretøy
+|Dette er selvbetjeningsløsningen hvor man kan foreta eieskifte og omregistrering med betaling. Helt
+sentralt for API-et
+|Løsningsarkitekt
+|===========================
+
+= Vurderte alternativer og anbefalinger
+
+= Arkitektur for denne leveransen
+
+== Brukstilfeller (Use case)
+
+=== Oversikt aktører og brukstilfeller
+
+[cols="2,15",options="header",grid="cols"]
+|=========
+|Aktør|Beskrivelse
+|Sluttbruker
+|Det er denne som ønsker enten å kjøpe eller å selge bil. Sluttbruker kan operere på vegne av en
+organisasjon (firma) hvis dette er registrert i www.altinn.no.
+
+|3-part
+|Den som tilrettelegger for at funksjonalitet i API-et benyttes. Denne aktøren kan være en bilforhandler som
+tilbyr en applikasjon for bruker, eller et forsikringsselskap som håndterer kjøp og salg av biler.
+
+|IDP
+|For å sikre identiteten til sluttbruker så er det noen få godkjente autentiseringsleverandører. Bank-ID
+og ID-Porten er slike aktører. For offentlige parter så skal id-porten benyttes.
+
+|Tjenestetilbyder
+|Dette vil være statens vegvesen. Det er denne aktøren som definerer API-et.
+
+|STS
+|Kan konvertere aksesstoken til internt token (svv token) som blant annet inneholde fødselsnummer på sluttbruker
+
+|=========
+
+[cols="2,15",options="header",grid="cols"]
+|=========
+|Brukstilfelle|Beskrivelse
+|List kjøretøy
+|3-part har implementert en tjeneste som benytter API-et til å liste alle kjøretøy for en sluttbruker
+
+|Start eierskifte
+|3-part har implementert en tjeneste som benytter API-et for eierskifte. 3-part må sørge for at sluttbruker er autentisert hos godkjent IDP og et aksesstoken er utstedt for sluttbruker.
+
+|Godkjenne salgsmelding
+|3-part har implementert en tjeneste som muliggjør for en av partene på salgsmeldingen og godkjenne eller avbryte eierskifte. Som over må sluttbruker være autentisert.
+
+|Sjekk omregistreringsstatus
+|3-part har implementert en tjeneste som gjør det mulig å hente ut omregistreringsstatus på en gitt bil for en sluttbruker.
+
+|Start betaling av omregistrerings- eller årsavgift
+|3-part har implementert en tjeneste for betaling av avgift. Prosessen startes ved at 3-part sender en request til tjenestetilbyder med ønske om å starte betaling av avgift. Tjenestetilbyder starter prosessen mot Nets (betalingstilbyder) og returnerer en link til Nets.
+
+|Sluttfør betalingen
+|Etter at bruker har sluttført sin betaling mot Nets må 3-part sørge for at det sendes en request til tjenestetilbyder. Denne vil så sjekke betalingsstatus og eventuelt sluttføre transaksjonen mot nets
+
+|Sluttfør omregistreringen
+|Tjenestetilbyder har ansvaret om at status på registrering settes til omregistrert så snart alle krav er infridd. Første sjanse for dette er etter at omregistrering- eller årsavgiften er betalt.
+
+|=========
+
+=== List kjøretøy
+
+* Sluttbruker logger inn hos 3-part
+* 3-part sørger for at bruker autentiseres overfor IDP
+* IDP utsteteder aksesstoken til 3-part på vegne av sluttbruker
+* 3-part sender request til tjenestetilbyder som returnere en liste kjøretøy for sluttbruker
+* 3-part presenterer listen for sluttbruker, inkludert registreringsstatus
+
+=== Start eierskifte
+* Sluttbruker logger inn hos 3-part
+* 3-part sørger for at bruker autentiseres overfor IDP
+* IDP utsteteder aksesstoken til 3-part på vegne av sluttbruker
+* Sluttbruker starter eierskifte ved å legge inn navn, fødselsnummer og telefonnummer hos 3-part på eier, eventuelt medeier, kjøper og eventuelt medkjøper.
+* 3-part sender request (salgsmelding) til Tjenestetilbyder for registrering av eierskifte. Aksesstoken må ligge med.
+* Tjenestetilbyder sjekker aksesstoken om det er gyldig og henter ut svv token. Sjekker så om sluttbruker og bilnummer stemmer overens (må være en av de som er nevnt i salgsmeldingen)
+* Tjenestetilbyder registrerer eierskifte og returnerer en status til 3-part
+* Tjenestetilbyder sender varsel til alle parter i salgsmeldingen untatt sluttbruker. Varseltekst må ligge med salgsmeldingen fra 3-part. Varselet er en påminnelse om at mottaker må inn hos 3-part og godkjenne salgsmeldingen.
+
+=== Godkjenn salgsmelding
+
+* Sluttbruker logger inn hos 3-part. Sluttbruker er i denne sammenheng en av de andre på salgsmeldingen.
+* 3-part sender forespørsel om åpne slagsmeldinger hvor sluttbruker er en av partene som må godkjenne salget. Forespørsel går til Tjenestetilbyder, inkludert aksesstoken
+* Slutbruker godkjenner eller avviser salgsmeldingen overfor 3-part. Requesten sendes videre til tjenestetilbyder.
+* Tjenestetilbyder godkjenner eller avviser at sluttbruker er med på salget. Varsel sendes
+* Legg merke til at selvbetjeningsløsningen skal kunne benyttes som alternativ kanal for godkjenningsprosessen
+* Hvis en sluttbruker avviser salgsmeldingen vil status settes til avbrutt og eierskifte må eventuelt startes på nytt
+* Når siste aktør (sluttbruker) har godkjent salgsmeldingen sendes det varsel om dette istedet og salgsmeldingen godkjennes av tjenestetilbyder - og omregistrering kan skje
+
+=== Sjekk omregistreringsstatus
+
+* Sluttbruker logger inn hos 3-part som sørger for at IDP autentiserer brukeren og utsteder aksesstoken
+* Sluttbruker velger å sjekke registreringsstatus for et gitt registreringsnummer. Request sendes til tjenestetilbyder som returner status. Følgende krav må være i orden før omregistrering kan skje:
+** Omregistreringsavgiften må være betalt
+** Årsavgiften må være betalt
+** Forsikring må være registrert på hovedeier
+** Godkjent EU-kontroll
+** Må finnes skilt på bilen
+
+=== Start betaling av omregistrerings- eller årsavgift
+* Sluttbruker logger inn hos 3-part som sørger for at IDP autentiserer brukeren og utsteder aksesstoken
+* Sluttbruker ønsker å betale avgift for gitt registreringsnummer
+* 3-part sender request til tjenestetilbyder om å starte betalingstransaksjon
+* Tjenestetilbyder verifiserer sluttbruker opp mot registreringsnummer og starter transaksjon mot Nets. Returnerer en url som viser hvor 3-part skal sende bruker
+* 3-part sender bruker til Nets
+
+=== Sluttfør betalingen
+* Etter at sluttbruker har betalt på Nets må 3-part sørge for at sluttbruker rutes tilbake til 3-part.
+* 3-part må så sende request til tjenestetilbyder om å sluttføre betalingstransaksjonen
+* Tjenestetilbyder sjekker om alt er og å sluttfører transaksjonen som medfører at betaling er gjennomført
+* Tjenestetilbyder vil så sjekke neste brukstilfelle
+* Tjenestetilbyder returnerer en kvittering på gjennomført betaling
+
+=== Sluttfør omregistreringen
+* Tjenestetilbyder må ved gjevne mellomrom sjekke de oppstartede omregistreringer
+* For hver omregistrering sjekkes om alle krav er oppfylt (se listen i 8.1.5).
+* Hvis alle krav er oppfylt så settes status "omregistrert" for denne bilen.
+
+== Komponentmodell
+
+== Tjeneste- og operasjonsbeskrivelser
+
+=== Tjenestebeskrivelse: _hent kjøretøysdata_
+[cols="2,15",options="header",grid="cols"]
+|=========
+|Felt|Verdi
+
+|Navn på tjeneste
+|Hent kjøretøysdata
+
+|Beskrivelse (kort)
+|For en pålogget bruker skal det være mulig å hente ut egne kjøretøysdata.
+
+|Beskrivelse (detaljert)
+|Under bruk i salgsmelding eller omregistrering så har man behov for å vite hvilke kjøretøy som kan selges.
+Dette gjelder også for kjøretøy for en organisasjon.  Resultatet av denne tjenesten skal være en liste av
+kjøretøy med relevant data om hvert enkelt kjøretøy.
+
+|Type tjeneste
+|Les
+
+|SLA
+|
+
+|Tjenesteoperasjoner
+|
+
+|Version
+|
+
+|Endepunkt UTV
+|
+
+|=========
+
+== Seksvensdiagram
+
+== Installasjonsdiagram
