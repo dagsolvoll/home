@@ -26,11 +26,11 @@ Retningslinje
 Under arbeid | *Siste endet:* +
 2017-10-18
 
-| Gyldig fra dato: 2+| *Godkjent av*
-|  2+| *Godkjent dato*
+| *Gyldig fra dato:* 2+| *Godkjent av:*
+|  2+| *Godkjent dato:*
 
 | *Dokumentid:* +
-xx | *Ansvarlig person:* +
+ | *Ansvarlig person:* +
 Dag Solvoll | *Eier:* +
 Seksjon for arkitektur
 
@@ -38,22 +38,28 @@ Seksjon for arkitektur
 https://www.vegvesen.no/wiki/x/EbBAB
 
 3+| *Bakgrunn:* +
-s
+Ønsker at man skal ha en enhetlig måte å utvikle ikt-løsninger som støtter selvbetjening for publikum.
 
 3+| *Mål:* +
-sss
+Utarbeide et sett med retningslinjer
 
 3+| *Anvendelse:* +
-sss
+IKT løsninger som inneholder deler som skal kunne brukes av publikum.
 
 3+| *Beskrivelse:* +
-sss
+Inneholder:
+
+* Løsningsarkitektur som skal gjenbrukes for alle selvbetjeningsløsninger
+* Publiseringsløsning
+* Autentisering
+* Tilgangskontroll
+* Sikkerhet (kryptering)
 
 3+| *Konsekvenser:* +
-sss
+
 
 3+| *Referanse til ekstern standard:* +
-None
+Ingen
 |=======================================
 
 
