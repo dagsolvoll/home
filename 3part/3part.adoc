@@ -1,0 +1,379 @@
+= Arkitekturvurdering for 3-parts api
+v1.0,
+include::../locale/attributes-nb.adoc[]
+:toc:
+:numbered:
+:source-highlighter: coderay
+[bibliography]
+// asciidoc -b html5 -a icons -a toc2 -a theme=flask  index.adoc
+
+== Innledning
+
+Statens vegvesen har i dag interne systemer for behandling av eierskifte av bil,
+herunder betaling av omregistreringsavgift der det er nødvendig. Før det ble
+utviklet en selvbetjeningsløsning så ble dette håndtert av ansatte på
+trafikkstasjonene. Med selvbetjening ble mange ressurser frigjort, og hvis man
+kan utvikle et API som 3-parter kan utvikle applikasjoner mot vil statens
+vegvesen kunne frigjøre enda flere ressurser. Dette vil også være i i tråd med
+statens ønske om mer digitalisering.
+
+Siden API-et vil måtte håndtere personopplysninger - personnummer knyttet til
+bil - er det viktig at løsningen er sikker og at man kan være sikker på at data
+som utveksles for en person faktisk er personen som ønsker å selge/kjøpe bilen.
+Dette vil sette krav til 3-part og det må utvikles avtale mellom statens
+veivesen og 3-part. Denne arkitekturbeskrivelsen vil ikke gå inn i dette.
+
+image::img/konsept2.png[]
+
+Bildet over skisserer hvilke parter som vil være involvert i bruken av API. Det
+som beskrives her er
+
+* Forhold som 3-parten må tenkte på. Hvordan autentiseringen av brukeren skal
+gjøres, hvilke informasjon som må sendes ved i hvert API-kall osv.
+
+* Forhold som vegvesen.no må tenkte på. Strukturen på API - prosessen til salgsmelding og omregistrering.
+Verifisering av hvert enkelt anrop. Hvordan det passer i SVV sin infrastruktur.
+* Håndtering av betaling i forbindelse med betaling av omregistreringsavgift.
+
+Legg merke til at slukkbruker i denne sammenheng kan være en som ønsker å selge bilen sin på portal.no, eller
+det kan være en ansatt i et leasingselskap som ønsker å selge/kjøpe biler som selskapet eier. I Første
+tilfelle er 3-part portal.no, i andre er det leasingsselskapet.
+
+== Funksjonelle mål og krav
+
+=== Overordnet mål med leveransen
+
+Målet for prosjektet er å utrede og beskrive de områdene som er nødvendig for at utvikling av tredjeparts
+APIer kan startes i etterkant og at APIer (når de er utviklet) kan tas i bruk av tredjepart. Det innebærer
+nødvendige retningslinjer, standarder og avtaler. Prosjektet definerer selv hvilke retningslinjer,
+standarder og avtaler som er nødvendig for å nå målene, men de skal som minimum dekke arkitektur,
+sikkerhet, tilgjengelighet, brukskvalitet og juridiske aspekter samt profilering og gjenkjennelighet.
+I den grad prosjektets leveranser påvirker eksisterende retningslinjer og standarder, bør disse oppdateres.
+Oppdragsgiver skal etter prosjektet ha trygghet for at tredjeparts APIer kan utvikles uten at det utfordrer
+arkitektur, sikkerhet, ansvarsforhold eller eksisterende interne retningslinjer.
+
+== Etatens arkitekturprinsipper for IKT-løsninger
+<<ARKP>>
+
+=== Fremtidsrettet
+
+I henhold til digitaliseringsrundskrivet <<DIGI>> er det mål at man skal gjøre offentlig informasjon
+tilgjengelig for viderebruk - også gjennom API-er.
+
+Å få parter utenfor vegvesenet til å lage løsninger som kan avlaste prosesser internt er nyttig.
+
+=== Tilgjengelig
+
+Å lage API-er som er tilgjengelig døgnet rundt vil gi parter mulighet til å lage tilgjengelige løsninger.
+Dette vil i andre omgang gjøre våre tjenester mere tilgjengelig for sluttbrukere.
+
+=== Brukervennlig
+
+N/A
+
+=== Prosesstilpasset
+
+API-et skal muliggjøre at brukerne selv kan gjennomføre eierskifte og omregistrering.  Dette er eksisterende
+prosesser som løses enten gjennom selvbetjening hos SVV eller som en del av fagsystemet (autosys).  Må
+regne med at det er behov for teknisk brukerstøtte i tillegg til funksjonell brukerstøtte slik man har i
+selvbetjeningsløsningene.
+
+=== Samhandlende
+
+API-et bygges på eksisterende selvbetjeningsløsninger og vil ikke samhandle som sådan med andre IKT-løsninger -
+det vil ikke være datautveksling for eksempel.
+
+=== Gjenbrukbar
+
+Løsningen vil benytte seg av eksisterende selvbetjeningsløsninger.  Vi vil også basere oss på eksisterende
+API-er.
+
+Man ønsker å lage standarder og retningslinjer som kan beyttes i fremtidige API-er.
+
+=== Sikker
+
+Et viktig kriteria er at API-et er sikret mot brudd på konfidensialitet, integritet og tilgjengelighet.
+Konfidensialitet betyr at man kan være sikker på at de som foretar eierskifte faktisk er de som er med i
+salgsmeldingen og at ingen andre får innsyn i denne.
+
+=== Åpen
+
+IKT-løsningenes datagrunnlag, virkemåte og anvendelse kan gjøres rede for.
+
+=== Fleksibel
+
+API-et som utvikles skal kunne brukes av ulike 3-parter.  Skal være så generisk som mulig som kan sikre
+at de fleste tjenesteutviklere skal kunne ta del i dette.
+
+== IKT krav for løsningen
+
+== Omfang
+
+== Gjenbrukbare løsninger og tjenester
+
+[cols="2,2,9,2",options="header"]
+|===
+|Potensiell gjenbrukbar løsning eller SOA-tjeneste | CMDB-id/URL eller annen identifikator |
+Vurdering rundt gjenbruk i denne leveransen | Hvem har deltatt i vurderingen
+| STS | <ikke definert> | Denne løsningen er i ferd med å utvikles og vil bli benyttet for å validere
+innkommende token og hente ut fødselsnummer fra IDP|
+Løsningsarkitekt
+| Selvbetjening Kjøretøy | SB-Kjøretøy | Dette er selvbetjeningsløsningen hvor man kan foreta eieskifte
+og omregistrering med betaling.  Helt sentralt for API-et | Løsningsarkitekt
+|===
+
+== Vurderte alternativer og anbefalinger
+
+== Arkitektur for denne leveransen
+
+=== Brukstilfeller
+
+==== Oversikt aktører og brukstilfeller
+
+[cols="4,9", options="header"]
+|===
+| Aktør | Beskrivelse
+| Sluttbruker | Det er denne som ønsker enten å kjøpe eller å selge bil.  Sluttbruker kan operere på vegne av
+en organisasjon (firma) hvis dette er registrert i www.altinn.no.
+| 3-part | Den som tilrettelegger for at funksjonalitet i API-et benyttes.  Denne aktøren kan være en bilforhandler
+som tilbyr en applikasjon for bruker, eller et forsikringsselskap som håndterer kjøp og salg av biler.
+| IDP | For å sikre identiteten til sluttbruker så er det noen få godkjente autentiseringsleverandører.
+Bank-ID og ID-Porten er slike aktører.  For offentlige parter så skal id-porten benyttes.
+| Tjenestetilbyder | Dette vil være statens vegvesen.  Det er denne aktøren som definerer API-et.
+|===
+
+
+
+[cols="4,9", options="header"]
+|===
+| Brukstilfelle | Beskrivelse
+| Gjennomfør eieskifte |
+- a
+* sdf
+
+|===
+
+== Autentisering og autorisasjon
+
+For å tillate salgsmelding og omregistrering må statens vegvesen være sikker på at aktørene som er involvert
+er de som de utgir seg for å være.  Når en salgsmelding starter må personen som initierer salget være
+autentisert gjennom en felles autorisator.  Dette kan være *Id-porten*, *BankId* eller en annen
+identitetstilbyder (IDP) som tilbyr 2-faktor autentisering.
+
+For at SVV skal vite at brukeren er autentisert på rett måte må IDP-en støtte Open-ID Connect/OAuth2 settet
+med standarder (RFC-er) <<OAUTH2>><<OICD>>.
+
+SVV tjenesten som implementerer API-et vil i denne kontekst være en OAuth2 "Resource Provider".   3-parten som
+implementerer en OAuth2 klient må sørge for å sende over med API-kallet et _access-token_ som også er
+definert i OAuth2.
+
+=== Krav til IDP
+
+IDP kan i dette tilfelle være Bank-ID eller ID-porten. IDP en sørger for autentiseringen av bruker på vegne
+av 3-part (oauth2 klient).  Det må være mulig for 3-part å hente ut _access token_ for en autentisert bruker.
+Det må også være mulig for SVV å verifisere _access token_ og hente ut fødselsnummer på basis av dette
+tokenet.
+
+IDP må tilby et sett av REST endepunkter som kjør det mulig for 3-part og SVV å initiere og gjennomføre en
+sikker utveksling av data basert på verifiserbare sikkerhetstoken.
+
+[cols="2,9",options="header"]
+|===
+
+| Endepunkt | Beskrivelse
+| /oidc/oauth/authorize | Benyttes når 3-part finner ut at bruker må autentiseres.  3-part må da kjøre en
+redirect til dette endepunktet
+| /oidc/oauth/token | 3-part initierer en "autorization code flow" med å redirecte til endepunktet over.
+Når kontrollen kommer tilbake må dette endepunktet benyttes for å hente ut _access token_.  Dette
+endepunktet er beskyttet med basic autentication og 3-part må ha en "client id" og en "client secret".
+_access token_ som utstedes må være self contained, dvs. være strukturert som en jwt, med signatur og
+et sett med attributter (claims) som viser hvor det kom fra (idp), utstedt til (3-part) og hvem som kan
+bruke det (svv).
+| /oidc/oauth/jwk | Endepunkt som lister nøkler som f.eks. kan benyttes for å verifisere signaturen i
+_access token_ over.
+| /oidc/oauth/introspect | Når _access token_ når SVV's sitt API så vil det være behov for å hente ut f.eks.
+fødselsnummer fra IDP.  Da kan dette endepunktet benyttes.  Dette er også beskyttet av basic autentication og
+svv må ha en egen klient id/passord for dette.
+
+|===
+
+=== Krav til 3-part (klient)
+
+* Avtale med IDP om bruk av autentiseringstjeneste.  Dette kan være med Bank-ID, ID-Porten/Difi eller
+tilsvarende.  Det må være en IDP som også SVV støtter.
+* Avtale med SVV om bruk av API for salgsmelding og/eller omregistrering.  Undertegnet avtale medfører også
+at det tildeles en klient id og passord som skal benyttes under access mot API-et (_basic authentication_).
+* Hente ut _access token_ fra IDP og sende det med kallene til API.  Se under hvordan tokenet pakkes inn i
+requesten.
+*
+
+=== Krav til SVV
+
+* Implementere en token tjeneste (STS) som kan konvertere innkommende access token til et svv token som
+bl. annet inneholder fødselsnummer.
+
+* Avtale med IDP om bruk av valideringstjeneste (introspection) for å kunne validere innkommende token
+og også få levert fødselsnummeret fra denne tjenesten.
+
+* Håndtere API kall ved at det slås opp mot STS for å hente ut fødselsnummer.  Implementere APIet slik at
+det er mulighet for å gjennomføre salg/kjøp av bil.
+
+* Håndtere varsling av brukerne som er deltakere i salgsprosessen
+
+* Håndtere betalingsløsning slik at sluttbruker kan betale avgift ved omregistrering
+
+image::img/sekvens1.png[]
+
+Brukere som opptrer på vegne av en organisasjon vil bli sjekket mot altinn oppslag for å se om vedkommende
+har rettigheter til dette.
+
+== API
+
+API-et beskyttes på samme måte som alle andre interne api-er med en tjenestebruker.  Når en tredje part inngår
+avtale med SVV så vil det medføre at det utleveres en tjenestebruker med tilhørende passord.  Denne må legges
+inn i SVV's brukerkatalog på samme måte som alle interne tjenestebrukere.
+
+API-et må også få inn sikkerhetstokenet som nevnt over.  Dette må tredjepart legge som en del av header
+informasjonen i api-kallet.   Tjenestebrukeren vil ligge i hode-feltet "Authorization", og tokenet vil ligge
+i feltet "Application-Autorization".
+
+[source,java]
+----
+GET /api/salgsmelding HTTP/1.1
+Host: www.vegvesen.no
+Authorization: Basic b2lkY19zdGF0ZW5zdmVndmVzZW5fdGVzdDpkMzk1MjFkMy02MTRjLTQ3ZGItOTRlYi1lOTYzMWNlMWE5YTA=
+Application-Authorization: Bearer 154a535f4eb4ce1b1776571ddcc58da0
+----
+
+=== List mine kjøretøy
+
+Skal finnes operasjoner for å liste alle kjøretøy for den angitte bruker.  Dette betyr alle kjøretøy som en
+bruker er eier eller medeier for.
+
+Tilgjengelige operasjoner kan være:
+
+[source,java]
+----
+GET /api/kjoretoy - Lister alle kjøretøy med tekniske data, samt om bruker er eier/medeier
+GET /api/kjoretoy/{kjennemerke} - Samme som over samt at man lister alle eiere med navn og fødselsnummer
+----
+
+=== Salgsmelding / Eierskifte
+
+API-et for salgsmelding tar utgangspunktet i det API-et som er definert for selvbetjening og kan brukes
+nesten uten endring<<SALGAD>>.
+
+
+[source,java]
+----
+GET /api/salgsmeldinger - Henter alle "åpne" salgsmeldinger for en sakspart.
+----
+
+Kallet benyttes for at man kan skape seg en oversikt over de salgsmeldinger som en bruker (sakspart) er en
+del av.  Dette kan være en (med)kjøper eller en (med)selger eventuelt en bedrift som bruker kan operere på
+vegne av.
+
+[source,java]
+----
+POST /api/salgsmeldinger - lager en ny melding
+----
+
+Når en bruker vil starte ett eierskifte av bilen så fylles relevant info som kjennemerge, eiere og kjøpere
+og så kalles denne operasjonen som vil skape en ny salgsmelding og sende varsel (sms) til de andre berørte
+partene.  Brukeren som kaller operasjonen må være en av partene i eierskifte eventuelt en som har myndighet
+på vegne av en organisasjon.
+
+[source,java]
+----
+PUT /api/salgsmeldinger/{salgsmeldingId}/signatur - signere en salgsmelding
+----
+
+Når en av de berørte partene som ikke initierte eierskifte ønsker å godta salgsmeldingen så kan denne
+operasjonen benyttes.
+
+[source,java]
+----
+PUT /api/salgsmeldinger/{salgsmeldingId}/avbryt - avbryte en salgsmelding
+----
+
+Bruker kan også avbryte en salgsmelding som vedkommende er en del av.
+
+Alle åpne salgsmeldinger som er eldre enn 10 dager vil bli avvist.
+
+=== Omregistrering
+
+Før Statens vegvesen kan registrere ditt nye kjøretøy, må du som kjøper blant annet sjekke at dette er i orden:
+
+* Forsikring
+
+* Årsavgift
+
+* Gjennomført EU-kontroll
+
+* Omregistreringsavgift
+
+Etter at salgsmeldingen er registrert vil man kunne omregistrere bilen.  Hvis alle kriteriene over er
+oppfylt vil bilen omregistreres.  Dette skjer automatisk.  SVV har via motorvognregisteret informasjon om
+alle disse kriteriene. I 2018 vil årsavgiften innbakes i forsikringen. API-et vil støtte betaling av
+årsavgift og omregistreringsavgift som i dag finnes i selvbetjeningsløsningen.
+
+
+[source,java]
+----
+GET /api/omregistrering/tilgang/{regnr}
+----
+
+Sjekker om innlogget bruker kan se status for omregistrering for et gitt kjøretøy basert på Altinn
+rettigheter og eierforhold.
+
+[source,java]
+----
+GET /api/omregistrering/status/{regnr}
+----
+
+Henter omregistreringsstatus for et gitt kjøretøy.  Status inneholder informasjon om omregistrengsavgiften,
+som når salgsmeldingen var godkjent, hvor mange av vilkårene over som er oppfylt og årsavgift og
+omregistreringsavgiften så er betalingsinformasjon med.
+
+[source,java]
+----
+GET /api/omregistrering/betal/start/{avgift}/{regnr} - avgift = års- eller omregistrering
+----
+
+Dette endepunktet starter en betalingsprosess mot den betalingsleverandøren som statens vegvesen benytter
+for selvbetjening.  Det er viktig at salget startes og avsluttes gjennom dette api-et slik at
+betalingen gjennomføres på rett sett.  Dette kallet vil returnere en URL som skal benyttes mot brukeren
+for å rute denne gjennom selve betalingen hos betalingsleverandøren.footnote:[For tiden benytter statens
+vegvesen Nets som betalingsleverandør] I tillegg returneres en _betalingsid_.
+
+[source,java]
+----
+GET /api/omregistrering/betal/fullfor/{regnr}/{betalingsid} - betalingsid, se over
+----
+
+Etter at brukeren har gjennomført betalingen er det viktig at tredje part kaller dette endepunktet for å
+avslutte transaksjonen.  Betalingen er *ikke* gjennomført før denne er kalt.
+
+
+
+
+== Refererte dokumenter
+
+[cols="2,9"]
+|===
+
+| [[[OAUTH2]]] | https://tools.ietf.org/html/rfc6749[The OAuth 2.0 Authorization Framework]
+
+| [[[OICD]]] | http://openid.net/specs/openid-connect-core-1_0.html[OpenID Connect Core 1.0 incorporating errata set 1]
+
+| [[[STS]]] | https://www.vegvesen.no/wiki/display/IAOS/03+-+STS[Security Token Service (STS) i Statens Vegvesen]
+
+| [[[SALGAD]]] | https://www.vegvesen.no/wiki/display/FoV/SalgsmeldingAdapter-2.0[Salgsmeldingsadapter - eksisterende API for selvbetjening]
+
+| [[[OMREG]]] | https://www.vegvesen.no/wiki/display/FoV/Tjenestebeskrivelse%3A+OmregistreringAdapter-1.8[Omregistrering -
+ eksisterende API for selvbetjening]
+
+| [[[DIGI]]] | https://www.regjeringen.no/no/dokumenter/digitaliseringsrundskrivet-2016/id2522147/[Digitaliseringsrundskrivet]
+
+| [[[ARKP]]] | https://www.vegvesen.no/wiki/pages/viewpage.action?pageId=34537642[Etatens arkitekturprinsipper]
+|===
