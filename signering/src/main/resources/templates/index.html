@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StartSide</title>
+    <style>
+    table.example-table, .example-table td {
+        border: 1px solid green;
+        border-collapse: collapse;
+    }
+    </style>
+
+</head>
+<body>
+    <h1>Validering av SDO</h1>
+
+    <form action="/action" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file">
+        <input type="submit" value="Upload File" name="submit" />
+    </form>
+
+    <div id="result"></div>
+
+    <script src="/js/upload.js"></script>
+</body>
+</html>
