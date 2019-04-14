@@ -8,26 +8,8 @@
 |-------|-----------------------|
 | Demosite for autentisering og signering | https://tools.bankid.no/demosite/ |
 | Valider og les signerte dokumenter (SDO) | https://www.bankid.no/privat/los-mitt-bankid-problem/les-signerte-dokumenter/
-|       |                |
-
-
-[cols="2,4",options=header]
-|===
-|Beskrivelse
-|Adresse
-
-|Demosite for autentisering og signering
-|https://tools.bankid.no/demosite/
-
-|Valider og les signerte dokumenter (SDO)
-|https://www.bankid.no/privat/los-mitt-bankid-problem/les-signerte-dokumenter/
-
-|BankId developer portal
-|https://confluence.bankidnorge.no/confluence/display/DEVPUB/BankID+Norway+Developer+Portal?src=sidebar
-
-|BankID dokumentasjon
-|https://confluence.bankidnorge.no/confluence/kiev-open/bankid-coi-whitepaper/legal-notices
-
+| BankId developer portal | https://confluence.bankidnorge.no/confluence/display/DEVPUB/BankID+Norway+Developer+Portal?src=sidebar |
+| BankID dokumentasjon | https://confluence.bankidnorge.no/confluence/kiev-open/bankid-coi-whitepaper/legal-notices |
 |Bankid (Vipps) kode
 |https://github.com/vippsas/bankid-open-b2b-examples
 
@@ -43,7 +25,6 @@
 | Kartverkets systemdokumentasjon
 | https://github.com/kartverket/etinglysing-systembeskrivelse
 
-|===
 
 
 [cols="2,4",options=header]
