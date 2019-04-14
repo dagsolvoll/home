@@ -1,10 +1,15 @@
-= Signering
+# Signering
 
-== Signere dokumenter
+## Signere dokumenter
 
-== Referanser
+## Referanser
 
-i
+| Beskrivelse | Adresse |
+|-------|-----------------------|
+| Demosite for autentisering og signering | https://tools.bankid.no/demosite/ |
+| Valider og les signerte dokumenter (SDO) | https://www.bankid.no/privat/los-mitt-bankid-problem/les-signerte-dokumenter/
+|       |                |
+
 
 [cols="2,4",options=header]
 |===
