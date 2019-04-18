@@ -1,4 +1,6 @@
-# Signering
+# API for salgsmelding
+
+Etter å ha tatt beslutningen om at salgsmeldinger må signeres
 
 ## Signere dokumenter
 
@@ -24,5 +26,3 @@
 | BankID CA | BankID Certification Authority: The originator's system for issuing BankIDs. |
 | BankID RA | BankID Registration Authority: The originator's system for handling the lifecycle of BankIDs. |
 | BankID VA | BankID Validation Authority: The originator's system for online checking the revocation status of a BankID. |
-
-
