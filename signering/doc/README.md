@@ -1,8 +1,18 @@
 # API for salgsmelding
 
+API for salgsmelding må inneholde to funksjoner:
+
+- Validering av en salgsmelding som ikke er signert ennå.  
+Dette betyr at tredjepart kan sjekke om det er mulig å gjennomføre salgsmeldingen før 
+partene starter selve signeringen.  Det er en rekke vilkår som må sjekkes før en salgsmelding 
+kan godkjennes.
+
+- 
+
 Etter å ha tatt beslutningen om at salgsmeldinger må signeres
 
 ## Signere dokumenter
+
 
 ## Referanser
 
