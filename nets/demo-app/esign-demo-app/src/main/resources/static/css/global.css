@@ -1,0 +1,147 @@
+/************************************************************
+           Styles for E-sign demo app
+************************************************************/
+body {
+	font-family: verdana;
+	font-size: 14px;
+}
+
+.file_grp {
+	float: left;
+	margin: 6px 186px;
+	width: 75%;
+}
+
+.radio_grp {
+	float: left;
+	margin: 6px 186px;
+	width: 75%;
+}
+
+.merchant_logo {
+	border: 0 none;
+	float: right;
+	width: 100px;
+	margin: 8px 12px 0 0;
+}
+
+
+.formdiv {
+	margin: 25px 0 0 -125px;
+	display: block;
+	text-align: left;
+}
+
+.idpchoice {
+	background-color: #dbdbdb;
+	background-position: 6% 50%;
+	background-repeat: no-repeat;
+	border: medium none;
+	border-radius: 6px;
+	color: #555555;
+	cursor: pointer;
+	display: block;
+	font-size: 12px;
+	height: 45px;
+	margin: 27px 150px -21px;
+	text-align: center;
+	width: 200px;
+}
+
+.idpchoice:hover, .idpchoice_hover {
+	color: #000000;
+}
+
+.buttongrp {
+	padding: 25px 0px;
+}
+
+#p1 {
+	font-weight: normal;
+	text-align: justify;
+	margin: 20px 0;
+}
+
+#p1 span {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.otherpage {
+	margin: 90px 0 0;
+	text-align: left;
+}
+
+.othersources {
+	color: #000000;
+	font-weight: bold;
+}
+
+.link {
+	color: #000000;
+	font-weight: normal;
+}
+
+/***************** indexpage ***********************/
+#frame {
+	background: #ffffff;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	width: 100%;
+}
+
+#contentWrapper {
+	background: #ffffff;
+	border: medium none;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	text-align: left;
+	width: 630px;
+}
+
+#content {
+	border-color: #bfbfbf;
+	border-style: solid;
+	border-width: 1px;
+	clear: both;
+	height: 65%;
+	margin: 120px 0 10px;
+	min-height: 600px;
+	padding: 0;
+	text-align: left;
+	width: 628px;
+}
+
+#indexiframe {
+	min-height: 640px;
+	width: 628px;
+}
+/************End of index page  ***************/
+/********************REsult Page **************/
+.maintable {
+	border-color: #eaeaea;
+	border-radius: 3px;
+	border-width: 1px;
+	width: 100%;
+}
+
+
+.heading {
+	color: #000000;
+	font-size: 20px;
+	margin: 0 0 30px;
+}
+
+#description span {
+	display: block;
+	margin-bottom: 10px;
+}
+
+#description {
+	margin: 50px 3px 0px 3px;
+}
+
+/*******************End of styles for Result page */

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Error page</title>
+		<link rel="SHORTCUT ICON" href="/images/nets_favicon.png" />
+		<link rel="stylesheet" type="text/css" href="/css/global.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<script th:inline="javascript">
+			var esignPath = [[${homeUrl}]];
+		
+			window.history.pushState({}, '', esignPath);
+			
+			// This method handles the scenario when a user clicks on browser back button from this page
+			// On clicking back button, demo app front page is loaded rather than letting the control 
+			//    to go to E-Signing service without any required parameters
+			function registerPopstate() {
+				window.onpopstate = function(event) {
+					if(esignPath) {
+						top.window.location.href = esignPath;
+					} else {
+						top.window.location.href = "http://localhost:8080/esign";
+					}
+				};
+			}
+		</script>
+	</head>
+	<body onload="setTimeout(registerPopstate, 10);"> <!-- making a delayed call to handle Safari browser (as it fires popstate event during page load) -->
+		<div class="maintable">
+			<img src="/images/nets.png" alt="logo" class="merchant_logo"
+				width="20" height="30" hspace="0" vspace="0" />
+			<h2 class="heading">Error</h2>
+			<p>Application has encountered an error. Please contact Nets support team.</p>
+			<br />
+		</div>
+	</body>
+</html>

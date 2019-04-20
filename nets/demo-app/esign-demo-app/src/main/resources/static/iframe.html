@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="SHORTCUT ICON" href="/images/nets_favicon.png" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta name="viewport" content="user-scalable=yes, width=640" />
+<link rel="stylesheet" type="text/css" href="/css/global.css" />
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script type='text/javascript'>
+	$(document).ready(
+			function() {
+
+				$("#bankid").click(
+						function(e) {
+
+							var url = '/signing/url/BankId/'
+									+ $('input[name=doctype]:checked',
+											'#esign_form').val();
+							document.getElementById("esign_form").method = "POST";
+							document.getElementById("esign_form").action = url;
+							document.getElementById("esign_form").submit();
+							return false;
+						});
+
+				$("#nemid").click(
+						function(e) {
+							var url = '/signing/url/NemId/'
+									+ $('input[name=doctype]:checked',
+											'#esign_form').val();
+							document.getElementById("esign_form").action = url;
+							document.getElementById("esign_form").submit();
+							return false;
+						});
+
+				$("#pkieid").click(
+						function(e) {
+							var url = '/signing/url/PkiEid/'
+									+ $('input[name=doctype]:checked',
+											'#esign_form').val();
+							document.getElementById("esign_form").action = url;
+							document.getElementById("esign_form").submit();
+							return false;
+						});
+
+                $("#bankidse").click(
+                    function(e) {
+                        var url = '/signing/url/BankIdSe/'
+                            + $('input[name=doctype]:checked',
+                                '#esign_form').val();
+                        document.getElementById("esign_form").action = url;
+                        document.getElementById("esign_form").submit();
+                        return false;
+                    });
+			});
+</script>
+
+</head>
+<body>
+	<img src="/images/nets.png" alt="logo" class="merchant_logo" width="20"
+		height="30" hspace="0" vspace="0" />
+	<h2 class="heading">Nets E-Signing Demo App</h2>
+	<div id="p1">
+		<span>E-Signing is a complete signing solution which gives customers the ability to get documents digitally signed by their users.</span>
+		<span>All commonly used eIDs in the Nordics are supported: BankID and BankID on mobile (NO), NemID (DK), BankID (SE) and Tupas (FI). 
+						In this demo application you can sign a text or PDF document with BankID (NO), BankID (SE), NemID (DK) or Tupas (FI).</span>
+		<span>E-Signing is hosted at Nets and offered to customers as a service.</span>
+	</div>
+	<div class="formdiv">
+		<form id="esign_form" name="esign_form" enctype="multipart/form-data">
+			<div class="file_grp">
+				<input type="file" name="file_xml" id="file_xml_id"/><label>XML</label><br/>
+				<input type="file" name="file_xsl" id="file_xsl_id"/><label>XSL</label>
+			</div>
+			<div class="radio_grp">
+				<input type="radio" name="doctype" value="XML" checked/><label>XML</label>
+				<input type="radio" name="doctype" value="TXT"/><label>TEXT</label>
+				<input type="radio" name="doctype" value="PDF"/><label>PDF</label>
+			</div>
+			<div class="buttongrp">
+				<button class="idpchoice" name="bankid" id="bankid" value="BankId">Sign	with BankID ></button>
+				<button class="idpchoice" name="nemid" id="nemid" value="NemId">Sign with NemID ></button>
+				<button class="idpchoice" name="pkieid" id="pkieid" value="PkiEid">Sign with Tupas ></button>
+				<button class="idpchoice" name="bankidse" id="bankidse" value="BankIdSe">Sign with BankID SE ></button>
+			</div>
+		</form>
+	</div>
+	<div class="otherpage">
+		<p>
+			<span class="othersources">Other resources:</span>
+		</p>
+		<a class="link" href="https://www.nets.eu/developer" target="_blank">View Developer Site</a>
+	</div>
+</body>
+</html>

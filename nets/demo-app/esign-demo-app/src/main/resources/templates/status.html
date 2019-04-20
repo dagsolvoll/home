@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>E-Sign Demo App</title>
+		<link rel="SHORTCUT ICON" href="/images/nets_favicon.png" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta http-equiv="content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<link rel="stylesheet" type="text/css" href="/css/global.css" />
+
+		<script th:inline="javascript">
+			var esignPath = [[${homeUrl}]];
+		
+			window.history.pushState({}, '', esignPath);
+			
+			// This method handles the scenario when a user clicks on browser back button from this page
+			// On clicking back button, demo app front page is loaded rather than letting the control 
+			//    to go to E-Signing service without any required parameters
+			function registerPopstate() {
+				window.onpopstate = function(event) {
+					top.window.location.href=esignPath;
+				};
+			}
+		</script>
+	</head>
+	
+	<body onload="setTimeout(registerPopstate, 10);"> <!-- making a delayed call to handle Safari browser (as it fires popstate event during page load) -->
+		<div class="maintable">
+			<img src="/images/nets.png" alt="logo" class="merchant_logo"
+				width="20" height="30" hspace="0" vspace="0" />
+			<div id="successBlock" th:if="${status eq 'completed'}">
+				<h2 class="heading">Signing completed successfully</h2>
+		
+				<div id="description">
+					<table th:if="${sdo.certificate.seal}" border="1">
+						<tr><td colspan="2"><b>Seal</b></td> </tr>
+						<tr th:if="${sdo.certificate.seal.ssn}">
+							<td>Fødselsnummer</td>
+							<td th:text="${sdo.certificate.seal.ssn}"/>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.cn != null}">
+							<td>Cn</td>
+							<td th:text="${{sdo.certificate.seal.cn}}"></td>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.pkiVendor}">
+							<td>PkiVindor</td>
+							<td th:text="${sdo.certificate.seal.pkiVendor}"/>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.orgnumber != null}">
+							<td>Orgnummer</td>
+							<td th:text="${{sdo.certificate.seal.orgnumber}}"></td>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.o != null}">
+							<td>Ou</td>
+							<td th:text="${{sdo.certificate.seal.o}}"></td>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.policy != null}">
+							<td>Policy</td>
+							<td th:text="${{sdo.certificate.seal.policy}}"></td>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.issuerCn != null}">
+							<td>Issuer</td>
+							<td th:text="${{sdo.certificate.seal.issuerCn}}"></td>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.uniqueId != null}">
+							<td>Unique Id</td>
+							<td th:text="${{sdo.certificate.seal.uniqueId}}"></td>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.from > 0}">
+							<td>Fra</td>
+							<td th:text="${{new java.util.Date(sdo.certificate.seal.from)}}"></td>
+						</tr>
+						<tr th:if="${sdo.certificate.seal.to > 0}">
+							<td>Til</td>
+							<td th:text="${{new java.util.Date(sdo.certificate.seal.to)}}"></td>
+						</tr>
+					</table>
+					<table th:each="sign : ${sdo.certificate.signatureList}" border="1">
+						<tr th:if="${sign.ssn != null}">
+							<td>Fødselsnummer</td>
+							<td th:text="${{sign.ssn}}"></td>
+						</tr>
+						<tr th:if="${sign.cn != null}">
+							<td>Cn</td>
+							<td th:text="${{sign.cn}}"></td>
+						</tr>
+						<tr th:if="${sign.pkiVendor != null}">
+							<td>PKI Vendor</td>
+							<td th:text="${{sign.pkiVendor}}"></td>
+						</tr>
+						<tr th:if="${sign.orgnumber != null}">
+							<td>Orgnummer</td>
+							<td th:text="${{sign.orgnumber}}"></td>
+						</tr>
+						<tr th:if="${sign.o != null}">
+							<td>Ou</td>
+							<td th:text="${{sign.o}}"></td>
+						</tr>
+						<tr th:if="${sign.policy != null}">
+							<td>Policy</td>
+							<td th:text="${{sign.policy}}"></td>
+						</tr>
+						<tr th:if="${sign.issuerCn != null}">
+							<td>Issuer</td>
+							<td th:text="${{sign.issuerCn}}"></td>
+						</tr>
+						<tr th:if="${sign.uniqueId != null}">
+							<td>Unique Id</td>
+							<td th:text="${{sign.uniqueId}}"></td>
+						</tr>
+						<tr th:if="${sign.from > 0}">
+							<td>Fra</td>
+							<td th:text="${{new java.util.Date(sign.from)}}"></td>
+						</tr>
+						<tr th:if="${sign.to > 0}">
+							<td>Til</td>
+							<td th:text="${{new java.util.Date(sign.to)}}"></td>
+						</tr>
+					</table>
+					<span>
+						<textarea th:text="${{sdo.base64SDOString}}" cols="80", rows="20"/>
+					</span>
+
+					<span>You have now signed the document successfully.</span><span>The
+						document is stored in the E-Signing service for a period of time,
+						from where it can be fetched by you using the GetSDO call to
+						E-Signing.</span><span> It can also be archived to E-Archive for
+						long time storage.</span>
+				</div>
+			</div>
+			<div id="failureBlock" th:unless="${status eq 'completed'}">
+				<h2 class="heading">Signing was not completed</h2>
+		
+				<div id="description">
+					<span>The signing was not completed successfully. Please try again.</span>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

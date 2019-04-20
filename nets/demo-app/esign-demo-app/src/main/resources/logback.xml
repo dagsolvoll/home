@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+    <logger name="org.springframework" level="OFF"/>
+    <logger name="org.apache" level="OFF"/>
+    <logger name="com.github" level="OFF"/>
+    <root level="INFO">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

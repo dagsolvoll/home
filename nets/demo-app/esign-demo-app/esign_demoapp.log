@@ -1,0 +1,153 @@
+2019-04-16 11:12:29.259 [INFO ] --- Starting MainApplication on dag-XPS-2720 with PID 12526 (/home/dag/src/nets/demo-app/esign-demo-app/target/classes started by dag in /home/dag/src/nets/demo-app/esign-demo-app)
+2019-04-16 11:12:29.263 [INFO ] --- No active profile set, falling back to default profiles: default
+2019-04-16 11:12:31.030 [INFO ] --- Started MainApplication in 2.101 seconds (JVM running for 2.576)
+2019-04-16 11:12:31.033 [INFO ] --- E-Signing demo app started
+2019-04-16 11:12:33.052 [INFO ] --- Request received for /esign
+2019-04-16 11:12:36.984 [INFO ] --- POST BankId, TXT, 
+2019-04-16 11:12:36.984 [INFO ] --- XML 
+2019-04-16 11:12:36.984 [INFO ] --- XML 
+2019-04-16 11:12:36.992 [INFO ] --- OrderID=1587-esc-1555405956992, MerchantID=1587
+2019-04-16 11:12:36.995 [INFO ] --- Sending an InsertOrder request
+2019-04-16 11:12:37.405 [INFO ] --- Retrieving SignURL
+2019-04-16 11:12:37.405 [INFO ] --- Order(1587-esc-1555405956992, 1587, esignclientapi-test-1
+2019-04-16 11:12:37.496 [INFO ] --- Redirecting to E-Signing service https://www.sign-preprod1.nets.eu/sign/index.html?ref=8B9975396411905E56AB31E42A2F10D27F08C77C
+2019-04-16 11:12:51.743 [INFO ] --- Request received for /verify1
+2019-04-16 11:12:51.743 [INFO ] --- Signing completed
+2019-04-16 11:12:53.051 [ERROR] --- [THYMELEAF][http-nio-8090-exec-3] Exception processing template "status": An error happened during template parsing (template: "class path resource [templates/status.html]")
+
+org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "class path resource [templates/status.html]")
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:241)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parseStandalone(AbstractMarkupTemplateParser.java:100)
+	at org.thymeleaf.engine.TemplateManager.parseAndProcess(TemplateManager.java:666)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1098)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1072)
+	at org.thymeleaf.spring5.view.ThymeleafView.renderFragment(ThymeleafView.java:362)
+	at org.thymeleaf.spring5.view.ThymeleafView.render(ThymeleafView.java:189)
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1370)
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1116)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1055)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:897)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:791)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1417)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.attoparser.ParseException: Exception evaluating SpringEL expression: "sdo.certificate.seal" (template: "status" - line 36, col 13)
+	at org.attoparser.MarkupParser.parseDocument(MarkupParser.java:393)
+	at org.attoparser.MarkupParser.parse(MarkupParser.java:257)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:230)
+	... 52 common frames omitted
+Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "sdo.certificate.seal" (template: "status" - line 36, col 13)
+	at org.thymeleaf.spring5.expression.SPELVariableExpressionEvaluator.evaluate(SPELVariableExpressionEvaluator.java:290)
+	at org.thymeleaf.standard.expression.VariableExpression.executeVariableExpression(VariableExpression.java:166)
+	at org.thymeleaf.standard.expression.SimpleExpression.executeSimple(SimpleExpression.java:66)
+	at org.thymeleaf.standard.expression.Expression.execute(Expression.java:109)
+	at org.thymeleaf.standard.expression.Expression.execute(Expression.java:138)
+	at org.thymeleaf.standard.expression.Expression.execute(Expression.java:125)
+	at org.thymeleaf.standard.processor.StandardIfTagProcessor.isVisible(StandardIfTagProcessor.java:59)
+	at org.thymeleaf.standard.processor.AbstractStandardConditionalVisibilityTagProcessor.doProcess(AbstractStandardConditionalVisibilityTagProcessor.java:61)
+	at org.thymeleaf.processor.element.AbstractAttributeTagProcessor.doProcess(AbstractAttributeTagProcessor.java:74)
+	at org.thymeleaf.processor.element.AbstractElementTagProcessor.process(AbstractElementTagProcessor.java:95)
+	at org.thymeleaf.util.ProcessorConfigurationUtils$ElementTagProcessorWrapper.process(ProcessorConfigurationUtils.java:633)
+	at org.thymeleaf.engine.ProcessorTemplateHandler.handleOpenElement(ProcessorTemplateHandler.java:1314)
+	at org.thymeleaf.engine.TemplateHandlerAdapterMarkupHandler.handleOpenElementEnd(TemplateHandlerAdapterMarkupHandler.java:304)
+	at org.thymeleaf.templateparser.markup.InlinedOutputExpressionMarkupHandler$InlineMarkupAdapterPreProcessorHandler.handleOpenElementEnd(InlinedOutputExpressionMarkupHandler.java:278)
+	at org.thymeleaf.standard.inline.OutputExpressionInlinePreProcessorHandler.handleOpenElementEnd(OutputExpressionInlinePreProcessorHandler.java:186)
+	at org.thymeleaf.templateparser.markup.InlinedOutputExpressionMarkupHandler.handleOpenElementEnd(InlinedOutputExpressionMarkupHandler.java:124)
+	at org.attoparser.HtmlElement.handleOpenElementEnd(HtmlElement.java:109)
+	at org.attoparser.HtmlMarkupHandler.handleOpenElementEnd(HtmlMarkupHandler.java:297)
+	at org.attoparser.MarkupEventProcessorHandler.handleOpenElementEnd(MarkupEventProcessorHandler.java:402)
+	at org.attoparser.ParsingElementMarkupUtil.parseOpenElement(ParsingElementMarkupUtil.java:159)
+	at org.attoparser.MarkupParser.parseBuffer(MarkupParser.java:710)
+	at org.attoparser.MarkupParser.parseDocument(MarkupParser.java:301)
+	... 54 common frames omitted
+Caused by: org.springframework.expression.spel.SpelEvaluationException: EL1007E: Property or field 'certificate' cannot be found on null
+	at org.springframework.expression.spel.ast.PropertyOrFieldReference.readProperty(PropertyOrFieldReference.java:213)
+	at org.springframework.expression.spel.ast.PropertyOrFieldReference.getValueInternal(PropertyOrFieldReference.java:104)
+	at org.springframework.expression.spel.ast.PropertyOrFieldReference.getValueInternal(PropertyOrFieldReference.java:91)
+	at org.springframework.expression.spel.ast.CompoundExpression.getValueRef(CompoundExpression.java:59)
+	at org.springframework.expression.spel.ast.CompoundExpression.getValueInternal(CompoundExpression.java:89)
+	at org.springframework.expression.spel.ast.SpelNodeImpl.getValue(SpelNodeImpl.java:111)
+	at org.springframework.expression.spel.standard.SpelExpression.getValue(SpelExpression.java:328)
+	at org.thymeleaf.spring5.expression.SPELVariableExpressionEvaluator.evaluate(SPELVariableExpressionEvaluator.java:263)
+	... 75 common frames omitted
+
+2019-04-16 11:13:51.774 [INFO ] --- Request received for /esign
+2019-04-16 11:22:28.399 [INFO ] --- Starting MainApplication on dag-XPS-2720 with PID 13314 (/home/dag/src/nets/demo-app/esign-demo-app/target/classes started by dag in /home/dag/src/nets/demo-app/esign-demo-app)
+2019-04-16 11:22:28.403 [INFO ] --- No active profile set, falling back to default profiles: default
+2019-04-16 11:22:30.098 [INFO ] --- Started MainApplication in 2.027 seconds (JVM running for 2.52)
+2019-04-16 11:22:30.100 [INFO ] --- E-Signing demo app started
+2019-04-16 11:22:31.874 [INFO ] --- Request received for /esign
+2019-04-16 11:22:36.015 [INFO ] --- POST BankId, TXT, 
+2019-04-16 11:22:36.015 [INFO ] --- XML 
+2019-04-16 11:22:36.015 [INFO ] --- XML 
+2019-04-16 11:22:36.023 [INFO ] --- OrderID=1587-esc-1555406556022, MerchantID=1587
+2019-04-16 11:22:36.026 [INFO ] --- Sending an InsertOrder request
+2019-04-16 11:22:36.475 [INFO ] --- Retrieving SignURL
+2019-04-16 11:22:36.475 [INFO ] --- Order(1587-esc-1555406556022, 1587, esignclientapi-test-1
+2019-04-16 11:22:37.730 [INFO ] --- Redirecting to E-Signing service https://www.sign-preprod1.nets.eu/sign/index.html?ref=D7E2A452DC3F8F0D469E3AAF35FAE2644354F41E
+2019-04-16 11:22:52.175 [INFO ] --- Request received for /verify1
+2019-04-16 11:23:09.431 [INFO ] --- Request received for /verify
+2019-04-16 11:23:09.431 [INFO ] --- Signing completed
+2019-04-16 11:23:09.749 [INFO ] --- -----------------Cert info in filename (1, 1)
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.SSN        = 09096522557
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.Cn         = Olsen, Ole
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.PKI Vendor = BankID
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.OrganiNbmr = null
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.O          = TestBank1 AS
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.Policy     = PersonalQualified
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.IssuerCn   = C=NO,O=TestBank1 AS,OU=123456789,CN=BankID TestBank1 Bank CA 2
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.UniqueId   = 9578-6000-4-201091
+2019-04-16 11:23:09.749 [INFO ] --- SDO cert1.From       = 1507632835000
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.To         = 1570704835000
+2019-04-16 11:23:09.750 [INFO ] --- -----------------------------------------------------
+2019-04-16 11:23:09.750 [INFO ] --- -----------------Cert info in filename (1, 2)
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.SSN        = 02105892090
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.Cn         = Nilsen, Åse
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.PKI Vendor = BankID
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.OrganiNbmr = null
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.O          = TestBank1 AS
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.Policy     = PersonalQualified
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.IssuerCn   = C=NO,O=TestBank1 AS,OU=123456789,CN=BankID TestBank1 Bank CA 2
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.UniqueId   = 9578-6000-4-201090
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.From       = 1507632771000
+2019-04-16 11:23:09.750 [INFO ] --- SDO cert1.To         = 1570704771000
+2019-04-16 11:23:09.750 [INFO ] --- -----------------------------------------------------
+2019-04-16 11:49:46.369 [INFO ] --- Request received for /esign
